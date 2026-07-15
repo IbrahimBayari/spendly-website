@@ -7,25 +7,30 @@ for the Spendly homepage and legal pages.
 website/
 ├── index.html          # Homepage — hero, 3 feature cards, contact, legal links
 ├── styles.css          # Shared styles (emerald/mint, responsive, dark-mode aware)
+├── privacy.html        # FULL Privacy Policy  (served at /privacy or /privacy.html)
+├── terms.html          # FULL Terms of Service (served at /terms or /terms.html)
 ├── privacy/
-│   └── index.html      # Privacy Policy  →  served at /privacy
+│   └── index.html      # FULL Privacy Policy  (served at /privacy/)
 ├── terms/
-│   └── index.html      # Terms of Service →  served at /terms
-├── privacy.html        # Redirect stub → /privacy  (keeps old links working)
-├── terms.html          # Redirect stub → /terms
+│   └── index.html      # FULL Terms of Service (served at /terms/)
 └── README.md           # This file
 ```
 
-- **Clean URLs**: the real legal pages live in `privacy/index.html` and
-  `terms/index.html`, so a static host serves them at `/privacy` and `/terms`.
-  The old flat `privacy.html` / `terms.html` are tiny redirect stubs.
+- **No redirect stubs.** Both the flat files (`privacy.html`, `terms.html`) and
+  the folder pages (`privacy/index.html`, `terms/index.html`) contain the **full,
+  identical** page. This is deliberate belt-and-suspenders: whatever a host maps
+  `/privacy` to (extensionless → `privacy.html`, or folder → `privacy/index.html`),
+  the visitor always sees the real page — never a "moved" placeholder. Keep the
+  flat and folder copies in sync when the text changes.
+- **Links use `/privacy` and `/terms`** everywhere (homepage buttons, nav,
+  footer). On Cloudflare Pages / Netlify these clean URLs resolve to the full
+  page; `/privacy.html`, `/terms.html`, `/privacy/`, `/terms/` all work too.
 - **Absolute asset paths**: pages reference `/styles.css` and link to `/`,
-  `/privacy/`, `/terms/`. This means you must view the site **through a local
-  server** (below) — opening the files directly via `file://` won't resolve the
-  absolute paths.
+  `/privacy`, `/terms`. View the site **through a local server** (below) —
+  opening files via `file://` won't resolve the absolute paths.
 - The legal pages still show **"Draft — subject to legal review."** Keep that
-  until a lawyer signs off. When the legal text changes, update **both** the
-  `../spendly-app/docs/*_WEB.md` sources and these HTML pages.
+  until a lawyer signs off. When the legal text changes, update the
+  `../spendly-app/docs/*_WEB.md` sources **and** all four HTML copies.
 
 ---
 
@@ -101,8 +106,9 @@ serves the folder-based clean URLs (`/privacy`, `/terms`) out of the box.
 - `https://www.spendlyapp.me/` — homepage
 - `https://www.spendlyapp.me/privacy` — Privacy Policy
 - `https://www.spendlyapp.me/terms` — Terms of Service
-- `https://www.spendlyapp.me/privacy.html` / `/terms.html` — redirect to the
-  clean URLs above
+- `https://www.spendlyapp.me/privacy.html` / `/terms.html` — the same full
+  pages (not redirects)
+- `https://www.spendlyapp.me/privacy/` / `/terms/` — the same full pages
 - `https://spendlyapp.me/*` — should redirect to the `www` versions (set up in §3)
 
 Use `/privacy` and `/terms` as the **Privacy Policy URL** and **Support/Terms
@@ -116,7 +122,9 @@ The HTML legal pages are hand-mirrored from:
 - `../spendly-app/docs/PRIVACY_POLICY_WEB.md`
 - `../spendly-app/docs/TERMS_OF_SERVICE_WEB.md`
 
-When those change (or after legal review), update the matching page under
-`privacy/` and `terms/` here and redeploy. **Do not** claim any not-yet-live
-feature (real AI, OCR, voice, receipt scanning, SMS, Auto-Track, payments/bank
-connections) is active — keep the "coming soon" / "planned" framing.
+When those change (or after legal review), update **all four** copies so they
+stay identical — `privacy.html` + `privacy/index.html`, and `terms.html` +
+`terms/index.html` — then redeploy. (Tip: edit the folder page, then copy it over
+the flat file.) **Do not** claim any not-yet-live feature (real AI, OCR, voice,
+receipt scanning, SMS, Auto-Track, payments/bank connections) is active — keep
+the "coming soon" / "planned" framing.
