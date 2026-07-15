@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Spendly — Preview</title>
+  <meta name="theme-color" content="#07402f" />
+  <style>
+    :root{
+      --bg:#f4f7f5;--bg-tint:#eef4f0;--card:#fff;--card2:#ebf1ed;--text:#0c1f17;--text-soft:#22332b;
+      --muted:#61756b;--line:#e0e8e3;--primary:#0b6b4f;--deep:#07402f;--mint:#31c48d;
+      --gold-soft:#f7eed6;--gold-bright:#d4af37;--shadow:0 10px 30px rgba(12,31,23,.08);
+      --shadow-sm:0 4px 14px rgba(12,31,23,.06);--maxw:960px;--readw:720px;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+    body{margin:0;background:var(--bg);color:var(--text);line-height:1.65;font-size:16px;
+      font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+    a{color:var(--primary)}
+    .wrap{max-width:var(--maxw);margin:0 auto;padding:0 22px}
+    .wrap-read{max-width:var(--readw);margin:0 auto;padding:0 22px}
+
+    /* page switching (no JS): show home by default; show a section when its id is targeted */
+    .page{display:none}
+    .page:target{display:block}
+    body:not(:has(:target)) #home{display:block}
+
+    .nav{position:sticky;top:0;z-index:10;background:rgba(244,247,245,.9);backdrop-filter:saturate(140%) blur(8px);border-bottom:1px solid var(--line)}
+    .nav-inner{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px 22px;max-width:var(--maxw);margin:0 auto}
+    .brand{display:inline-flex;align-items:center;gap:10px;font-weight:800;font-size:19px;color:var(--text);text-decoration:none;letter-spacing:-.2px}
+    .brand .leaf{width:32px;height:32px;border-radius:10px;background:linear-gradient(135deg,var(--primary),var(--deep));display:inline-flex;align-items:center;justify-content:center;font-size:17px;box-shadow:var(--shadow-sm)}
+    .nav-links a{margin-left:18px;text-decoration:none;color:var(--muted);font-weight:600;font-size:14.5px}
+    .nav-links a:hover{color:var(--primary)}
+
+    .hero{position:relative;overflow:hidden;background:radial-gradient(120% 120% at 50% -10%,#0e7a5b 0%,#0b6b4f 38%,#07402f 78%,#0a2e26 100%);color:#fff;border-radius:26px;padding:64px 30px 60px;text-align:center;margin:30px 0 26px;box-shadow:var(--shadow)}
+    .hero::after{content:"";position:absolute;inset:0;background:radial-gradient(60% 40% at 50% 0%,rgba(49,196,141,.35),transparent 70%);pointer-events:none}
+    .hero>*{position:relative;z-index:1}
+    .badge{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.28);color:#eafff5;border-radius:999px;padding:7px 15px;font-size:12.5px;font-weight:700;letter-spacing:.3px;margin-bottom:20px}
+    .badge .dot{width:7px;height:7px;border-radius:50%;background:var(--mint);box-shadow:0 0 0 4px rgba(49,196,141,.25)}
+    .hero h1{font-size:46px;line-height:1.05;margin:6px 0;font-weight:800;letter-spacing:-1px}
+    .hero .tagline{color:var(--mint);font-weight:700;font-size:19px;margin:0 0 16px}
+    .hero .lead{color:rgba(255,255,255,.92);max-width:560px;margin:0 auto 26px;font-size:17px}
+    .btn-row{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+    .btn{display:inline-block;text-decoration:none;font-weight:700;border-radius:12px;padding:13px 22px;font-size:15px;transition:transform .06s ease,opacity .15s ease}
+    .btn:active{transform:translateY(1px)}
+    .btn-primary{background:var(--mint);color:#04150e;box-shadow:0 6px 18px rgba(49,196,141,.35)}
+    .btn-ghost{background:rgba(255,255,255,.1);color:#fff;border:1px solid rgba(255,255,255,.4)}
+    .btn:hover{opacity:.94}
+    .hero .notify{margin-top:18px;font-size:13.5px;color:rgba(255,255,255,.8)}
+    .hero .notify a{color:#eafff5;font-weight:700}
+
+    .section-head{text-align:center;margin:40px 0 6px}
+    .section-head h2{font-size:24px;margin:0;letter-spacing:-.4px}
+    .section-head p{color:var(--muted);margin:6px 0 0}
+    .features{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:22px 0 10px}
+    .feature{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:22px;box-shadow:var(--shadow-sm)}
+    .feature .icon{width:46px;height:46px;border-radius:13px;background:var(--card2);display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:12px}
+    .feature h3{margin:0 0 4px;font-size:17px}
+    .feature p{margin:0;color:var(--muted);font-size:14.5px}
+    .feature .soon{display:inline-block;margin-top:10px;font-size:11px;font-weight:800;letter-spacing:.4px;color:#7a5f12;background:var(--gold-soft);border:1px solid var(--gold-bright);border-radius:999px;padding:3px 9px}
+
+    .disclaimer{background:var(--bg-tint);border:1px solid var(--line);border-radius:16px;padding:16px 18px;margin:24px 0;color:var(--muted);font-size:13.5px;text-align:center}
+    .contact-cta{text-align:center;color:var(--muted);margin:26px 0 10px}
+    .contact-cta a{font-weight:700}
+
+    .legal{padding-top:8px}
+    .legal .page-head{text-align:center;padding:26px 0 6px}
+    .legal h1{font-size:30px;margin:8px 0 2px;letter-spacing:-.5px}
+    .legal h2{font-size:20px;margin:32px 0 6px;letter-spacing:-.2px}
+    .legal h3{font-size:16.5px;margin:22px 0 4px;color:var(--text)}
+    .legal p,.legal li{color:var(--text-soft)}
+    .legal ul{padding-left:20px}
+    .legal li{margin:5px 0}
+    .legal .meta{color:var(--muted);font-size:14.5px;margin:2px 0}
+    .legal .divider{height:1px;background:var(--line);border:0;margin:22px 0 6px}
+    .draft-note{background:var(--gold-soft);border:1px solid var(--gold-bright);color:#3a2e08;border-radius:12px;padding:12px 14px;font-weight:700;font-size:14px;margin:16px auto 4px;max-width:var(--readw);text-align:center}
+    .back-link{display:inline-block;margin:6px 0 2px;color:var(--primary);font-weight:700;text-decoration:none;font-size:14px}
+    .back-link:hover{text-decoration:underline}
+
+    .footer{border-top:1px solid var(--line);margin-top:44px;padding:28px 22px 46px;text-align:center;color:var(--muted);font-size:13.5px}
+    .footer .f-brand{font-weight:800;color:var(--text)}
+    .footer .f-links{margin-top:10px}
+    .footer .f-links a{color:var(--muted);text-decoration:none;margin:0 9px;font-weight:600}
+    .footer .f-links a:hover{color:var(--primary)}
+    .footer .f-note{margin-top:12px;font-size:12.5px;color:var(--muted);max-width:560px;margin:12px auto 0}
+
+    @media (max-width:720px){
+      .features{grid-template-columns:1fr}
+      .hero{padding:48px 22px 44px;border-radius:20px}
+      .hero h1{font-size:36px}
+      .hero .lead{font-size:16px}
+      body{font-size:15.5px}
+      .nav-links a{margin-left:14px;font-size:13.5px}
+    }
+    @media (prefers-color-scheme:dark){
+      :root{--bg:#090e0b;--bg-tint:#101812;--card:#121b15;--card2:#1b2820;--text:#edf5ef;--text-soft:#d7e3dc;--muted:#8ca295;--line:#233227;--primary:#2bd48f;--shadow:0 10px 30px rgba(0,0,0,.4);--shadow-sm:0 4px 14px rgba(0,0,0,.3)}
+      .nav{background:rgba(9,14,11,.9)}
+      .draft-note{background:#2c2310;border-color:#efcb6b;color:#f3e6c4}
+      .feature .soon{color:#f3e6c4;background:#2c2310;border-color:#efcb6b}
+      .btn-primary{color:#04150e}
+    }
+  </style>
+</head>
+<body>
+  <header class="nav">
+    <div class="nav-inner">
+      <a class="brand" href="#home"><span class="leaf">🌿</span> Spendly</a>
+      <nav class="nav-links">
+        <a href="#privacy">Privacy</a>
+        <a href="#terms">Terms</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ================= HOME ================= -->
+  <section id="home" class="page">
+    <main class="wrap">
+      <section class="hero">
+        <span class="badge"><span class="dot"></span> App launch coming soon</span>
+        <h1>Spendly</h1>
+        <p class="tagline">Your AI money coach</p>
+        <p class="lead">Spendly helps you track spending, understand your money, and make better day-to-day decisions with an AI money coach.</p>
+        <div class="btn-row">
+          <a class="btn btn-primary" href="#privacy">Privacy Policy</a>
+          <a class="btn btn-ghost" href="#terms">Terms of Service</a>
+        </div>
+        <p class="notify">Questions or early access? <a href="mailto:hello@spendlyapp.me">hello@spendlyapp.me</a></p>
+      </section>
+
+      <div class="section-head">
+        <h2>Money, made simple</h2>
+        <p>A calmer way to see where your money goes.</p>
+      </div>
+
+      <section class="features">
+        <div class="feature">
+          <div class="icon">🧾</div>
+          <h3>Track spending</h3>
+          <p>Log expenses in seconds and see your spending organised by category, day, and budget.</p>
+        </div>
+        <div class="feature">
+          <div class="icon">🛡️</div>
+          <h3>Safe to Spend</h3>
+          <p>A clear daily number that respects your budget and protects your savings goal.</p>
+        </div>
+        <div class="feature">
+          <div class="icon">🧠</div>
+          <h3>AI money coach</h3>
+          <p>Ask for day-to-day guidance and get simple, friendly nudges toward better habits.</p>
+          <span class="soon">Smarter AI coming soon</span>
+        </div>
+      </section>
+
+      <p class="disclaimer">
+        Spendly is a personal budgeting tool — <strong>not a bank or a licensed financial advisor</strong>, and it doesn’t connect to your bank.
+        Some features are still in development: the AI coach currently uses simple built-in guidance, and subscriptions,
+        receipt scanning, voice entry, and automatic transaction import are planned but not live yet.
+      </p>
+
+      <p class="contact-cta">Contact: <a href="mailto:hello@spendlyapp.me">hello@spendlyapp.me</a></p>
+    </main>
+  </section>
+
+  <!-- ================= PRIVACY ================= -->
+  <section id="privacy" class="page">
+    <main class="wrap-read legal">
+      <div class="page-head">
+        <a class="back-link" href="#home">← Back to home</a>
+        <h1>Privacy Policy</h1>
+      </div>
+      <div class="draft-note">📝 Draft — subject to legal review.</div>
+      <p class="meta"><strong>Effective date:</strong> 14 July 2026</p>
+      <p class="meta"><strong>App:</strong> Spendly (“Spendly”, “the app”, “we”, “us”)</p>
+      <p class="meta"><strong>Contact:</strong> <a href="mailto:hello@spendlyapp.me">hello@spendlyapp.me</a></p>
+      <hr class="divider" />
+
+      <h2>1. Who we are and what Spendly is</h2>
+      <p>Spendly is a personal finance tracking and AI money-coaching app. It helps you record expenses, see what’s safe to spend, set budgets, and get general money-habit guidance.</p>
+      <p>Spendly is not a bank, lender, broker, or licensed financial advisor. It does not hold your money, connect to your bank accounts, or move funds. Guidance in the app is educational and general in nature only (see Section 9).</p>
+
+      <h2>2. Our privacy approach: local-first</h2>
+      <p>Spendly is local-first. By default, your data is stored on your device and stays there. Cloud sync is optional and only happens if you choose to create an account and sign in (see Section 4). You can use Spendly without an account.</p>
+
+      <h2>3. What data we collect and where it lives</h2>
+      <h3>a) Data you create in the app (stored locally on your device)</h3>
+      <ul>
+        <li>Expenses you add: amount, merchant/description, category, date, source label, and optional note.</li>
+        <li>Settings and preferences: display currency, monthly budget, savings goal, per-category budgets, AI-Coach on/off, dark mode.</li>
+        <li>Learned merchant-to-category preferences (e.g. that you file a given merchant under a given category), stored only on your device.</li>
+        <li>AI chat messages you type in the coach screen and their replies.</li>
+        <li>App state: whether you’ve completed onboarding, and your local Pro-trial toggle status.</li>
+      </ul>
+      <p>This data remains on your device unless you enable cloud sync.</p>
+
+      <h3>b) Account data (only if you create an account)</h3>
+      <p>If you choose to sign in, we use [Supabase] (our hosting and authentication provider) to create an account. We collect your email address, an authentication credential (password) handled by the auth provider, and a system-generated user ID. We ask for minimal personal information — an email is all that’s required. We do not require your name, phone number, address, or government ID.</p>
+
+      <h3>c) Data synced to the cloud (only if you sign in)</h3>
+      <p>If you’re signed in, the following is synced to your account so you can back it up and use it across devices:</p>
+      <ul>
+        <li>your expenses,</li>
+        <li>your profile settings (currency, monthly budget, savings goal, AI-Coach preference), and</li>
+        <li>your category budgets.</li>
+      </ul>
+      <p>Not synced (kept on-device only): dark-mode preference, onboarding status, learned merchant-to-category preferences, AI usage counters, local Pro-trial status, and AI chat history.</p>
+
+      <h3>d) Data we do NOT collect</h3>
+      <ul>
+        <li>We do not connect to your bank, read your real SMS messages, or access your transactions automatically. Any “Auto-Track”, receipt-scan, or voice features currently in the app are simulated demonstrations (see Section 6).</li>
+        <li>We do not sell your data.</li>
+        <li>We do not knowingly collect data from children (see Section 12).</li>
+      </ul>
+
+      <h2>4. Accounts and authentication</h2>
+      <ul>
+        <li>Accounts are optional. Without one, Spendly runs fully locally.</li>
+        <li>Authentication is provided by [Supabase]. Your credentials are handled by that provider; we only ever use a public “anon” key in the app, and each account can only access its own data via database row-level security.</li>
+        <li>Signing out ends your cloud session but keeps your data on your device.</li>
+      </ul>
+
+      <h2>5. Payments and subscriptions</h2>
+      <ul>
+        <li>Spendly may offer an optional “Pro” subscription in the future.</li>
+        <li>We do not process or store your payment details. Purchases will be handled by the Apple App Store, Google Play, and our subscription infrastructure provider [RevenueCat]. Their handling of your purchase and payment data is governed by their privacy policies.</li>
+        <li>At present the in-app “Pro”/trial is a local toggle only — no real charge, no card, no purchase data collected. Payment processing is not live yet.</li>
+      </ul>
+
+      <h2>6. AI features (current status)</h2>
+      <ul>
+        <li>Spendly’s AI money coach, expense parsing, and reports currently run on built-in rule-based logic on your device — the “real” cloud AI is not enabled yet. When real AI is enabled later, requests would be sent to our own backend service; this policy will be updated before that happens.</li>
+        <li>Voice entry, receipt scanning (OCR), and Auto-Track are simulated placeholders today. They do not use your microphone, camera, or real SMS or bank data. We will update this policy before any of them becomes real.</li>
+        <li>AI output is general educational guidance, not personalized financial, legal, or tax advice (see Section 9).</li>
+      </ul>
+
+      <h2>7. How we use data</h2>
+      <p>We use your data to run the app’s core features (tracking, budgets, safe-to-spend, Money Age), provide optional backup and sync, operate accounts, and — if you enable it later — process subscriptions via the providers in Section 5. We do not use your financial data for advertising and do not sell it.</p>
+
+      <h2>8. Sharing and third parties</h2>
+      <p>We share data only with service providers strictly needed to run features you use:</p>
+      <ul>
+        <li>[Supabase] — account/authentication and cloud sync (only if you sign in).</li>
+        <li>[Apple] / [Google] / [RevenueCat] — subscription processing (only if and when you subscribe, once live).</li>
+      </ul>
+      <p>Each provider processes data under its own privacy policy. We do not otherwise share, rent, or sell your data.</p>
+
+      <h2>9. No financial, legal, or tax advice</h2>
+      <p>Spendly provides budgeting tools and general educational guidance only. It is not a licensed financial, investment, legal, or tax advisor, and nothing in the app is personalized professional advice. You are responsible for your own financial decisions; consider a qualified professional for advice specific to your situation.</p>
+
+      <h2>10. Data retention and deletion</h2>
+      <ul>
+        <li>Local data: stays on your device until you delete it. Use Settings → Delete transaction data to clear expenses on the device, or uninstall the app to remove all local data.</li>
+        <li>Cloud data (if you have an account): you can delete your on-device transaction data (expenses) in the app at any time (via Delete transaction data); your budgets and settings remain on the device. Cloud account deletion must currently be requested by email at <a href="mailto:hello@spendlyapp.me">hello@spendlyapp.me</a> — a full in-app account-deletion option is not yet available; you can start a request from Settings → Account. We process verified deletion requests within 30 days, except where we must retain limited records to comply with law.</li>
+        <li>You can export your expenses to a CSV file from within the app at any time.</li>
+      </ul>
+
+      <h2>11. Data security</h2>
+      <ul>
+        <li>Data in transit to our providers is protected with encryption (HTTPS); providers encrypt data at rest.</li>
+        <li>Only a public key ships in the app; access to your account data is restricted to your own account by row-level security. No secret keys are embedded in the app.</li>
+        <li>No method of storage or transmission is 100% secure; we cannot guarantee absolute security.</li>
+      </ul>
+
+      <h2>12. Children’s privacy</h2>
+      <p>Spendly is intended for users aged 13 and over and is not intended for children under 13. We do not knowingly collect personal data from children. If you believe a child has provided us data, contact us and we will delete it.</p>
+
+      <h2>13. Your rights</h2>
+      <p>Depending on your location, you may have rights to access, correct, export, or delete your personal data, and to withdraw consent. To exercise them, contact <a href="mailto:hello@spendlyapp.me">hello@spendlyapp.me</a>. We may need to verify your identity first.</p>
+
+      <h2>14. International users</h2>
+      <p>Your data may be processed in countries other than your own (e.g. where our providers host data). Where required, we rely on appropriate safeguards. Data-hosting region: ap-northeast-1 (Tokyo).</p>
+
+      <h2>15. Changes to this policy</h2>
+      <p>We may update this policy. Material changes will be posted here with a new effective date, and where required we’ll seek your consent before new data uses take effect.</p>
+
+      <h2>16. Contact</h2>
+      <p>Questions or requests: <a href="mailto:hello@spendlyapp.me">hello@spendlyapp.me</a></p>
+      <p>Spendly, Available upon request</p>
+    </main>
+  </section>
+
+  <!-- ================= TERMS ================= -->
+  <section id="terms" class="page">
+    <main class="wrap-read legal">
+      <div class="page-head">
+        <a class="back-link" href="#home">← Back to home</a>
+        <h1>Terms of Service</h1>
+      </div>
+      <div class="draft-note">📝 Draft — subject to legal review.</div>
+      <p class="meta"><strong>Effective date:</strong> 14 July 2026</p>
+      <p class="meta"><strong>App:</strong> Spendly (“Spendly”, “the app”, “we”, “us”)</p>
+      <p class="meta"><strong>Contact:</strong> <a href="mailto:hello@spendlyapp.me">hello@spendlyapp.me</a></p>
+      <hr class="divider" />
+
+      <h2>1. Acceptance of these Terms</h2>
+      <p>By downloading, accessing, or using Spendly, you agree to these Terms of Service and to our Privacy Policy. If you do not agree, do not use the app.</p>
+
+      <h2>2. What Spendly is (and is not)</h2>
+      <p>Spendly is a personal finance tracking and AI money-coaching app for recording expenses, budgeting, and general money-habit guidance.</p>
+      <p>Spendly is not a bank, lender, payment institution, broker, or licensed financial, investment, legal, or tax advisor. It does not hold your money, connect to your bank, or execute transactions. It is a personal tool, not a regulated financial service.</p>
+
+      <h2>3. Not financial, legal, or tax advice</h2>
+      <ul>
+        <li>All content, numbers, “Money Age”, “safe to spend”, budgets, and AI coach responses are provided for general, educational, informational purposes only. They are not personalized financial, investment, legal, or tax advice and must not be relied on as such.</li>
+        <li>Calculations use simplified formulas and the data you enter; they may be approximate or incomplete.</li>
+        <li>You are solely responsible for your financial decisions. Consider a qualified professional for advice specific to your situation.</li>
+      </ul>
+
+      <h2>4. AI features — current status and limitations</h2>
+      <ul>
+        <li>Spendly’s AI coaching, expense parsing, and reports currently run on built-in rule-based logic (“mock AI”). Full cloud-based AI is not enabled yet.</li>
+        <li>Voice entry, receipt scanning (OCR), and Auto-Track are simulated demonstrations and do not process real audio, images, SMS, or bank data.</li>
+        <li>AI and automated output may be inaccurate, incomplete, or unsuitable for your circumstances. Always review suggestions and figures yourself. Do not treat AI output as professional advice (see Section 3).</li>
+      </ul>
+
+      <h2>5. Accounts</h2>
+      <ul>
+        <li>Accounts are optional; Spendly works locally without one.</li>
+        <li>If you create an account, you must provide accurate information (an email) and keep your credentials secure. You are responsible for activity under your account.</li>
+        <li>You must be at least 13 years old and legally able to enter this agreement.</li>
+        <li>We may suspend or terminate accounts that violate these Terms or the law.</li>
+      </ul>
+
+      <h2>6. Your data and content</h2>
+      <ul>
+        <li>You retain ownership of the data you enter. You grant us only the limited rights needed to operate the features you use (e.g. storing and syncing your data if you sign in), as described in the Privacy Policy.</li>
+        <li>Local-first: by default your data stays on your device. Cloud sync is optional and only occurs if you sign in.</li>
+        <li>You are responsible for keeping your own backups. Uninstalling the app removes all local data; “Delete transaction data” removes your expenses. If you have no account, deleted data may be unrecoverable.</li>
+      </ul>
+
+      <h2>7. Subscriptions and payments (“Spendly Pro”)</h2>
+      <ul>
+        <li>Spendly may offer an optional paid “Pro” subscription.</li>
+        <li>When live, subscriptions are sold and processed by the Apple App Store, Google Play, and our provider [RevenueCat] — not by us directly. Their terms, pricing display, billing, renewals, and refund policies apply.</li>
+        <li>Auto-renewal: subscriptions typically renew automatically until cancelled; you manage and cancel them through your Apple ID or Google Play account settings. Any free trial converts to a paid subscription unless cancelled before it ends, per the store’s rules.</li>
+        <li>Current status: the in-app “Pro”/trial is presently a local toggle only — there is no real charge and no purchase yet. Real billing is not live.</li>
+        <li>Losing Pro (expiry or cancellation) re-locks premium features only; it does not delete your expenses, budgets, settings, or exports.</li>
+        <li>Refunds, where applicable, are handled by the relevant app store under its policies.</li>
+      </ul>
+
+      <h2>8. Acceptable use</h2>
+      <p>You agree not to:</p>
+      <ul>
+        <li>use Spendly for unlawful purposes;</li>
+        <li>attempt to breach security, access other users’ data, or bypass row-level access controls;</li>
+        <li>reverse-engineer, disrupt, or overload the app or its providers; or</li>
+        <li>misuse AI features to generate unlawful or harmful content.</li>
+      </ul>
+
+      <h2>9. Third-party services</h2>
+      <p>Spendly relies on third-party providers (e.g. [Supabase] for accounts and sync; [Apple], [Google], and [RevenueCat] for subscriptions). Your use of those features is also subject to those providers’ terms and policies. We are not responsible for third-party services.</p>
+
+      <h2>10. Availability and changes</h2>
+      <ul>
+        <li>We provide Spendly on an “as is” and “as available” basis and may modify, suspend, or discontinue features at any time.</li>
+        <li>Features described in the app that are labelled as demos or “coming soon” may change or may not ship.</li>
+      </ul>
+
+      <h2>11. Disclaimers</h2>
+      <p>To the maximum extent permitted by law, Spendly and its content are provided without warranties of any kind, express or implied, including accuracy, fitness for a particular purpose, and non-infringement. We do not warrant that the app will be error-free, uninterrupted, or that calculations or AI output are accurate or suitable for your needs.</p>
+
+      <h2>12. Limitation of liability</h2>
+      <p>To the maximum extent permitted by law, we are not liable for any indirect, incidental, special, consequential, or punitive damages, or for any financial losses, decisions, or outcomes arising from your use of (or reliance on) Spendly, including AI output and calculations. Our total liability, where liability cannot be excluded, is limited to the amount you paid us in the previous 12 months, or 100 SAR if you have not made any payment.</p>
+
+      <h2>13. Indemnity</h2>
+      <p>You agree to indemnify and hold us harmless from claims arising out of your misuse of the app or violation of these Terms, to the extent permitted by law.</p>
+
+      <h2>14. Termination</h2>
+      <p>You may stop using Spendly at any time. We may suspend or terminate access for breach of these Terms or as required by law. Provisions that by their nature should survive (e.g. Sections 3, 11, 12, and 13) survive termination.</p>
+
+      <h2>15. Governing law and disputes</h2>
+      <p>These Terms are governed by the laws of Dubai, United Arab Emirates, without regard to conflict-of-laws rules. Disputes will be handled in the Courts of Dubai, United Arab Emirates, unless applicable law requires otherwise.</p>
+
+      <h2>16. Changes to these Terms</h2>
+      <p>We may update these Terms. Material changes will be posted here with a new effective date; continued use after changes take effect constitutes acceptance, where permitted by law.</p>
+
+      <h2>17. Contact</h2>
+      <p>Questions about these Terms: <a href="mailto:hello@spendlyapp.me">hello@spendlyapp.me</a></p>
+      <p>Spendly, Available upon request</p>
+    </main>
+  </section>
+
+  <footer class="footer">
+    <div class="f-brand">🌿 Spendly</div>
+    <div class="f-links">
+      <a href="#home">Home</a>·
+      <a href="#privacy">Privacy Policy</a>·
+      <a href="#terms">Terms of Service</a>·
+      <a href="mailto:hello@spendlyapp.me">hello@spendlyapp.me</a>
+    </div>
+    <p class="f-note">© 2026 Spendly · Your AI money coach. Budgeting guidance only — not financial advice. This is a preview; the deployed site uses /privacy and /terms.</p>
+  </footer>
+</body>
+</html>
