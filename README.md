@@ -3,6 +3,29 @@
 A tiny **static** website (plain HTML/CSS, no frameworks, no JS, no build step)
 for the Spendly homepage and legal pages.
 
+## 🟢 Status: DEPLOYED and LIVE (2026-07-16) — ⚠️ REDEPLOY PENDING (2026-09-18)
+
+- **Hosting:** Cloudflare Pages (active) · **Domain:** `spendlyapp.me` (connected)
+- **Live and verified:**
+  - `https://spendlyapp.me` — homepage
+  - `https://spendlyapp.me/privacy` — full Privacy Policy
+  - `https://spendlyapp.me/terms` — full Terms of Service
+  - `https://spendlyapp.me/privacy.html` — full policy (no redirect stub)
+- **Canonical URLs are the APEX** (`https://spendlyapp.me/...`). Use these in
+  App Store Connect and Google Play Console.
+- ⚠️ **Known issue:** `https://www.spendlyapp.me` returns **HTTP 522**
+  (Cloudflare cannot reach the origin). Non-blocking — the apex works — but fix
+  it so visitors typing `www` don't hit an error. See §3.
+- Legal pages still show **"📝 Draft — subject to legal review."** — correct;
+  it stays until a lawyer signs off.
+- ⚠️ **The files in this folder are AHEAD of what is live.** On 2026-09-18 the
+  legal pages were rewritten for real AI: the policy now describes the AI
+  provider (OpenAI, United States), the bounded conversation window, the
+  in-app consent, how to withdraw it, live subscriptions, and in-app account
+  deletion. **The live site still serves the old text, which says cloud AI is
+  "not enabled yet" — that is now false.** Redeploy this folder to Cloudflare
+  Pages and re-verify all four URLs before the app goes to external beta.
+
 ```
 website/
 ├── index.html          # Homepage — hero, 3 feature cards, contact, legal links
@@ -81,7 +104,26 @@ serves the folder-based clean URLs (`/privacy`, `/terms`) out of the box.
 
 ---
 
-## 3. Connect the GoDaddy domain (`spendlyapp.me`)
+## 3. Domain (`spendlyapp.me`) — CONNECTED ✅
+
+The domain is **already connected and serving** on the apex
+(`https://spendlyapp.me`). The setup steps below are kept for reference.
+
+### ⚠️ Outstanding: fix the `www` subdomain (HTTP 522)
+
+`https://www.spendlyapp.me` currently returns **522** while the apex works. A
+522 means Cloudflare has DNS for `www` but can't reach an origin behind it —
+typically the `www` hostname isn't attached to the Pages project. To fix:
+
+- **Preferred:** Cloudflare Pages project → **Custom domains** → add
+  **`www.spendlyapp.me`** alongside the apex. Pages then serves both.
+- **Or:** add a **Redirect Rule** sending `www.spendlyapp.me/*` →
+  `https://spendlyapp.me/$1` (301), and remove any stale `www` DNS record that
+  points at a dead origin.
+
+Until it's fixed, **link and submit the apex URLs only**.
+
+### Reference — original connection steps
 
 **Option A — Move DNS to Cloudflare (simplest, recommended):**
 1. In Cloudflare, **Add a site** → `spendlyapp.me` → it gives you **two
@@ -101,18 +143,23 @@ serves the folder-based clean URLs (`/privacy`, `/terms`) out of the box.
 
 ---
 
-## 4. URLs that should work after deployment
+## 4. Live URLs
 
-- `https://www.spendlyapp.me/` — homepage
-- `https://www.spendlyapp.me/privacy` — Privacy Policy
-- `https://www.spendlyapp.me/terms` — Terms of Service
-- `https://www.spendlyapp.me/privacy.html` / `/terms.html` — the same full
-  pages (not redirects)
-- `https://www.spendlyapp.me/privacy/` / `/terms/` — the same full pages
-- `https://spendlyapp.me/*` — should redirect to the `www` versions (set up in §3)
+**Verified live (2026-07-16):**
 
-Use `/privacy` and `/terms` as the **Privacy Policy URL** and **Support/Terms
-URL** in App Store Connect and Google Play Console.
+- ✅ `https://spendlyapp.me/` — homepage
+- ✅ `https://spendlyapp.me/privacy` — Privacy Policy
+- ✅ `https://spendlyapp.me/terms` — Terms of Service
+- ✅ `https://spendlyapp.me/privacy.html` — the same full page (not a redirect)
+- `https://spendlyapp.me/terms.html`, `/privacy/`, `/terms/` — the same full
+  pages (all four copies are real pages, per the note at the top)
+- ⚠️ `https://www.spendlyapp.me/*` — **HTTP 522**, not usable yet (see §3)
+
+**For the stores:** use the **apex** URLs — `https://spendlyapp.me/privacy` as
+the **Privacy Policy URL** and `https://spendlyapp.me/terms` as the
+**Support/Terms URL** in App Store Connect and Google Play Console. Do **not**
+submit the `www` variants while they 522. Support contact:
+**`hello@spendlyapp.me`**.
 
 ---
 
@@ -125,6 +172,9 @@ The HTML legal pages are hand-mirrored from:
 When those change (or after legal review), update **all four** copies so they
 stay identical — `privacy.html` + `privacy/index.html`, and `terms.html` +
 `terms/index.html` — then redeploy. (Tip: edit the folder page, then copy it over
-the flat file.) **Do not** claim any not-yet-live feature (real AI, OCR, voice,
-receipt scanning, SMS, Auto-Track, payments/bank connections) is active — keep
-the "coming soon" / "planned" framing.
+the flat file.) **Do not** claim any not-yet-live feature is active. As of 2026-09-18 **real AI
+and payments ARE live** and the pages say so; **OCR, voice, receipt scanning,
+SMS and Auto-Track are still simulated** and must keep the "coming soon" /
+"planned" framing. `preview.html` embeds a full copy of both policies too —
+update it in the same pass or it becomes a public page contradicting the real
+one.
