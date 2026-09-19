@@ -21,7 +21,7 @@ for the Spendly homepage and legal pages.
 - ⚠️ **The files in this folder are AHEAD of what is live.** On 2026-09-18 the
   legal pages were rewritten for real AI: the policy now describes the AI
   provider (OpenAI, United States), the bounded conversation window, the
-  in-app consent, how to withdraw it, live subscriptions, and in-app account
+  in-app consent, how to withdraw it, planned subscription processing, and in-app account
   deletion. **The live site still serves the old text, which says cloud AI is
   "not enabled yet" — that is now false.** Redeploy this folder to Cloudflare
   Pages and re-verify all four URLs before the app goes to external beta.
@@ -173,7 +173,7 @@ When those change (or after legal review), update **all four** copies so they
 stay identical — `privacy.html` + `privacy/index.html`, and `terms.html` +
 `terms/index.html` — then redeploy. (Tip: edit the folder page, then copy it over
 the flat file.) **Do not** claim any not-yet-live feature is active. As of 2026-09-18 **real AI
-and payments ARE live** and the pages say so; **OCR, voice, receipt scanning,
+is live; production payments are not yet enabled** and the pages say so; **OCR, voice, receipt scanning,
 SMS and Auto-Track are still simulated** and must keep the "coming soon" /
 "planned" framing. `preview.html` embeds a full copy of both policies too —
 update it in the same pass or it becomes a public page contradicting the real
