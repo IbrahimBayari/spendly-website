@@ -13,9 +13,14 @@ for the Spendly homepage and legal pages.
   - `https://spendlyapp.me/privacy.html` — full policy (no redirect stub)
 - **Canonical URLs are the APEX** (`https://spendlyapp.me/...`). Use these in
   App Store Connect and Google Play Console.
-- ⚠️ **Known issue:** `https://www.spendlyapp.me` returns **HTTP 522**
-  (Cloudflare cannot reach the origin). Non-blocking — the apex works — but fix
-  it so visitors typing `www` don't hit an error. See §3.
+- ✅ `https://www.spendlyapp.me` now returns **HTTP 200** and serves the site
+  (re-checked 2026-10-04; the July 522 no longer occurs). The apex stays the
+  canonical URL for the stores.
+- ✅ Favicon: before 2026-10-04 there was no favicon and no `404.html`, so
+  Cloudflare Pages answered every unknown path — including `/favicon.ico` — with
+  the homepage HTML and status 200. `favicon.ico`, `favicon-32.png`,
+  `apple-touch-icon.png` (from the app icon) and `404.html` fix that; Pages
+  serves `404.html` with a real 404 status. No hosting settings were changed.
 - Legal pages still show **"📝 Draft — subject to legal review."** — correct;
   it stays until a lawyer signs off.
 - ⚠️ **The files in this folder are AHEAD of what is live.** Branch
@@ -109,7 +114,7 @@ serves the folder-based clean URLs (`/privacy`, `/terms`) out of the box.
 The domain is **already connected and serving** on the apex
 (`https://spendlyapp.me`). The setup steps below are kept for reference.
 
-### ⚠️ Outstanding: fix the `www` subdomain (HTTP 522)
+### Resolved: the `www` subdomain (was HTTP 522)
 
 `https://www.spendlyapp.me` currently returns **522** while the apex works. A
 522 means Cloudflare has DNS for `www` but can't reach an origin behind it —
@@ -153,7 +158,7 @@ Until it's fixed, **link and submit the apex URLs only**.
 - ✅ `https://spendlyapp.me/privacy.html` — the same full page (not a redirect)
 - `https://spendlyapp.me/terms.html`, `/privacy/`, `/terms/` — the same full
   pages (all four copies are real pages, per the note at the top)
-- ⚠️ `https://www.spendlyapp.me/*` — **HTTP 522**, not usable yet (see §3)
+- ✅ `https://www.spendlyapp.me/*` — HTTP 200 (re-checked 2026-10-04)
 
 **For the stores:** use the **apex** URLs — `https://spendlyapp.me/privacy` as
 the **Privacy Policy URL** and `https://spendlyapp.me/terms` as the
