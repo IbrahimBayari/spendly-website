@@ -77,7 +77,7 @@
     <p>Events never contain a message, an amount, a merchant, a note, or your email address. They are stored against a one-way scrambled code derived from your account ID — not the ID itself. Signed-out use sends no events. We keep these records until you delete your account (Section 10).</p>
 
     <h3>e) Crash reports</h3>
-    <p>If Spendly crashes or hits an error, a crash report is sent to [Sentry]. It contains the error, where it happened in the app, and your device model, operating system and app version. Before it is sent, it is stripped of your account and email, request contents, and anything you typed, and financial values are removed. Crash reports are not linked to your account.</p>
+    <p>If Spendly crashes or hits an error, a crash report is sent to [Sentry]. It contains the error, where it happened in the app, and your device model, operating system and app version. Before it is sent, it is stripped of your account and email, request contents, and anything you typed, and financial values are removed. Crash reports are not linked to your account. Like any server, Sentry may record the network (IP) address a report was sent from.</p>
 
     <h3>f) Data we do NOT collect</h3>
     <ul>
@@ -137,7 +137,7 @@
     <p>We share data only with service providers strictly needed to run features you use:</p>
     <ul>
       <li>[Supabase] — accounts, authentication and cloud sync (only if you sign in), and the database for our AI usage counters and usage analytics.</li>
-      <li>[Railway] — hosts Spendly’s backend, which passes AI requests to OpenAI without storing their content.</li>
+      <li>[Railway] — hosts Spendly’s backend in the United States (US West), which passes AI requests to OpenAI without storing their content.</li>
       <li>[OpenAI] — Spendly AI (only when you are signed in and have agreed). Your message, a little of your recent conversation, and the budget summary in Section 6 are processed by OpenAI in the United States under its API terms.</li>
       <li>[Apple] / [Google] — Sign in with Apple and Google sign-in, if you use them; and App Store / Google Play purchases.</li>
       <li>[RevenueCat] — subscription management (Section 5).</li>
@@ -172,7 +172,7 @@
     <p>Depending on your location, you may have rights to access, correct, export, or delete your personal data, and to withdraw consent. You can withdraw AI consent in the app at any time (Section 6) and delete your account in the app (Section 10). For anything else, contact <a href="mailto:hello@spendlyapp.me">hello@spendlyapp.me</a>. We may need to verify your identity first.</p>
 
     <h2>14. International users</h2>
-    <p>Your data may be processed in countries other than your own. Where required, we rely on appropriate safeguards. Your account, synced data, AI usage counters and usage analytics are hosted by Supabase in ap-northeast-1 (Tokyo). When you use Spendly AI, your request is processed by OpenAI in the United States. Crash reports are processed by Sentry in the European Union (Germany). RevenueCat, Apple and Google process subscription and sign-in data under their own policies.</p>
+    <p>Your data may be processed in countries other than your own. Where required, we rely on appropriate safeguards. Your account, synced data, AI usage counters and usage analytics are hosted by Supabase in ap-northeast-1 (Tokyo). When you use Spendly AI, your request passes through Spendly’s backend, hosted by Railway in the United States (US West), and is processed by OpenAI in the United States. Crash reports are processed by Sentry in the European Union (Germany). RevenueCat, Apple and Google process subscription and sign-in data under their own policies.</p>
 
     <h2>15. Changes to this policy</h2>
     <p>We may update this policy. Material changes will be posted here with a new effective date, and where required we’ll seek your consent before new data uses take effect.</p>
