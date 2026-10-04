@@ -41,6 +41,10 @@ website/
 │   └── index.html      # FULL Privacy Policy  (served at /privacy/)
 ├── terms/
 │   └── index.html      # FULL Terms of Service (served at /terms/)
+├── licenses.html       # Open-source licence notices (served at /licenses); generated
+├── licenses/
+│   └── index.html      # same page (served at /licenses/)
+├── 404.html            # served by Cloudflare Pages with a real 404 status
 └── README.md           # This file
 ```
 
