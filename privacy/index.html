@@ -26,100 +26,119 @@
     </div>
     <div class="draft-note">📝 Draft — subject to legal review.</div>
 
-    <p class="meta"><strong>Effective date:</strong> 18 September 2026</p>
+    <p class="meta"><strong>Effective date:</strong> 4 October 2026</p>
     <p class="meta"><strong>App:</strong> Spendly (“Spendly”, “the app”, “we”, “us”)</p>
     <p class="meta"><strong>Contact:</strong> <a href="mailto:hello@spendlyapp.me">hello@spendlyapp.me</a></p>
     <hr class="divider" />
 
     <h2>1. Who we are and what Spendly is</h2>
-    <p>Spendly is a personal finance tracking and AI money-coaching app. It helps you record expenses, see what’s safe to spend, set budgets, and get general money-habit guidance.</p>
+    <p>Spendly is a personal budgeting and expense-tracking app with optional AI help. It helps you record expenses, see what’s safe to spend, set budgets, and ask Spendly AI about your own numbers.</p>
     <p>Spendly is not a bank, lender, broker, or licensed financial advisor. It does not hold your money, connect to your bank accounts, or move funds. Guidance in the app is educational and general in nature only (see Section 9).</p>
 
     <h2>2. Our privacy approach: local-first</h2>
-    <p>Spendly is local-first. By default, your data is stored on your device and stays there. Cloud sync is optional and only happens if you choose to create an account and sign in (see Section 4). You can use Spendly without an account.</p>
+    <p>Spendly is local-first. By default, your data is stored on your device and stays there. Cloud backup and sync are optional and only happen if you create an account and sign in (see Section 4). You can use Spendly without an account.</p>
 
     <h2>3. What data we collect and where it lives</h2>
-    <h3>a) Data you create in the app (stored locally on your device)</h3>
+    <h3>a) Data you create in the app (stored on your device)</h3>
     <ul>
-      <li>Expenses you add: amount, merchant/description, category, date, source label, and optional note.</li>
-      <li>Settings and preferences: display currency, monthly budget, savings goal, per-category budgets, AI-Coach on/off, dark mode.</li>
-      <li>Learned merchant-to-category preferences (e.g. that you file a given merchant under a given category), stored only on your device.</li>
-      <li>AI chat messages you type in the coach screen and their replies. These are stored on your device. If you have turned on AI data sharing, the message you send — together with a few of your most recent messages and replies from the same conversation — is also transmitted for processing as described in Section 6.</li>
-      <li>App state: whether you’ve completed onboarding, and your local Pro-trial toggle status.</li>
+      <li>Expenses you add: amount, merchant or description, category, date, how it was added (for example typed, voice, receipt or Auto-Track), and an optional note.</li>
+      <li>Settings: display currency, monthly budget, savings goal, per-category budgets, whether Spendly AI is on, and dark mode.</li>
+      <li>Learned merchant-to-category preferences (for example, that you file a given merchant under a given category).</li>
+      <li>Spendly AI chat messages and replies, and your choice about sharing data with Spendly AI. If you have agreed to AI data sharing, the message you send — with a few of your most recent messages from the same conversation — is also sent for processing as described in Section 6.</li>
+      <li>App state: whether you’ve completed onboarding, and a saved copy of your subscription status so Pro features keep working briefly offline.</li>
+      <li>The receipt-scan counter, kept in your iPhone’s Keychain (see Section 6).</li>
     </ul>
-    <p>This data remains on your device unless you enable cloud sync.</p>
+    <p>This data stays on your device unless you sign in and it is synced (see c) below).</p>
 
     <h3>b) Account data (only if you create an account)</h3>
-    <p>If you choose to sign in, we use [Supabase] (our hosting and authentication provider) to create an account. We collect your email address, an authentication credential (password) handled by the auth provider, and a system-generated user ID. We ask for minimal personal information — an email is all that’s required. We do not require your name, phone number, address, or government ID.</p>
+    <p>Accounts are provided by [Supabase], our hosting and authentication provider. You can sign up with an email and password, with Sign in with Apple, or with Google. We receive and store:</p>
+    <ul>
+      <li>your email address (with Sign in with Apple, this can be an Apple private-relay address);</li>
+      <li>a system-generated account ID;</li>
+      <li>your name, only if your sign-in provider shares it — Apple shares it once, the first time you sign in, if you choose to; Google shares the basic profile details on your Google account; and</li>
+      <li>for email accounts, a password, which is handled by [Supabase] and never stored by Spendly in readable form.</li>
+    </ul>
+    <p>We do not require your phone number, address, or government ID.</p>
 
     <h3>c) Data synced to the cloud (only if you sign in)</h3>
     <p>If you’re signed in, the following is synced to your account so you can back it up and use it across devices:</p>
     <ul>
       <li>your expenses,</li>
-      <li>your profile settings (currency, monthly budget, savings goal, AI-Coach preference), and</li>
+      <li>your profile settings (currency, monthly budget, savings goal, and whether Spendly AI is on), and</li>
       <li>your category budgets.</li>
     </ul>
-    <p>Not synced (kept on-device only): dark-mode preference, onboarding status, learned merchant-to-category preferences, AI usage counters, local Pro-trial status, your AI data-sharing choice, and AI chat history. Your chat history is never uploaded to your account — note that your message and a few recent messages from the same conversation are still sent for AI processing as described in Section 6, but they are not stored there.</p>
+    <p>Not synced (kept on your device only): dark mode, onboarding status, learned merchant-to-category preferences, your AI data-sharing choice, AI chat history, the receipt-scan counter, and the saved copy of your subscription status. Your chat history is never uploaded to your account.</p>
 
-    <h3>d) Data we do NOT collect</h3>
+    <h3>d) Usage analytics (only if you are signed in)</h3>
+    <p>When you are signed in, Spendly sends a small set of app events to our own backend so we can understand how the app is used and keep the AI service within its limits: app opened, sign-up and sign-in completed, expense added, AI request started, succeeded, failed or limited, on-device fallback used, paywall viewed, upgrade tapped, trial started, purchase completed, and export used. Each event can carry which AI feature was involved, a coarse error type, how long a request took, AI token counts and estimated cost, your platform, app version, and whether you are on Free or Pro.</p>
+    <p>Events never contain a message, an amount, a merchant, a note, or your email address. They are stored against a one-way scrambled code derived from your account ID — not the ID itself. Signed-out use sends no events. We keep these records until you delete your account (Section 10).</p>
+
+    <h3>e) Crash reports</h3>
+    <p>If Spendly crashes or hits an error, a crash report is sent to [Sentry]. It contains the error, where it happened in the app, and your device model, operating system and app version. Before it is sent, it is stripped of your account and email, request contents, and anything you typed, and financial values are removed. Crash reports are not linked to your account.</p>
+
+    <h3>f) Data we do NOT collect</h3>
     <ul>
       <li>We do not connect to your bank, read your SMS messages, or access your transactions automatically.</li>
-      <li>We do not collect audio or photos. Voice entry and receipt scanning are processed on your device and are not sent to us or to anyone else (see section 6).</li>
-      <li>We do not sell your data.</li>
+      <li>We do not collect audio or photos. Voice entry and receipt scanning are processed on your device and are not sent to us or to anyone else (see Section 6).</li>
+      <li>We do not sell your data, and we do not use it for advertising.</li>
       <li>We do not knowingly collect data from children (see Section 12).</li>
     </ul>
 
     <h2>4. Accounts and authentication</h2>
     <ul>
-      <li>Accounts are optional. Without one, Spendly runs fully locally.</li>
-      <li>Authentication is provided by [Supabase]. Your credentials are handled by that provider; we only ever use a public “anon” key in the app, and each account can only access its own data via database row-level security.</li>
+      <li>Accounts are optional. Without one, Spendly runs on your device only.</li>
+      <li>Authentication is provided by [Supabase]. Sign in with Apple and Google sign-in are handled by Apple and Google under their own privacy policies; Spendly receives only the details listed in Section 3b.</li>
+      <li>Only a public key ships in the app, and each account can only access its own data, enforced by database row-level security.</li>
       <li>Signing out ends your cloud session but keeps your data on your device.</li>
     </ul>
 
     <h2>5. Payments and subscriptions</h2>
     <ul>
-      <li>Spendly plans to offer an optional paid “Pro” subscription; production purchases are not currently enabled.</li>
-      <li>We do not process or store your payment details — no card number ever reaches us. When enabled, purchases will be handled by the Apple App Store and Google Play, and managed through our subscription provider [RevenueCat], under their own privacy policies.</li>
-      <li>When purchases are enabled, to link a purchase to your account we will send RevenueCat your Spendly account ID (never your email or your name). From them we will receive your subscription status — whether Pro is active, when it renews or expires, and whether a free trial has been used. We will use this only to unlock what you paid for.</li>
+      <li>Spendly offers an optional paid “Spendly Pro” subscription. Prices are shown by the App Store before you buy.</li>
+      <li>We do not process or store your payment details — no card number ever reaches us. Purchases are handled by the Apple App Store (or Google Play, where offered) and managed through our subscription provider [RevenueCat], under their own privacy policies.</li>
+      <li>RevenueCat receives your purchase and subscription records from the store. Before you sign in, it uses a random identifier generated in the app; when you sign in, we link your purchases to your Spendly account ID (never your email or your name). Our backend also checks your plan with RevenueCat using your account ID, to apply the right AI limits.</li>
+      <li>From RevenueCat we receive your subscription status — whether Pro is active, when it renews or expires, and whether you have had a free trial. We use this only to unlock what you paid for and to show your plan.</li>
     </ul>
 
     <h2>6. AI features</h2>
-    <p>Spendly’s AI money coach and AI expense parsing send the message you type, together with a summary of your budget numbers, to Spendly’s own backend service, which passes it to our AI provider, OpenAI, to generate a reply. OpenAI processes the request in the United States.</p>
+    <p>Spendly AI (chat answers, “Add with AI”, and the safe-to-spend explanation) sends your request to Spendly’s own backend, which passes it to our AI provider, OpenAI, to generate a reply. OpenAI processes the request in the United States. Cloud AI is used only when you are signed in and have agreed (see “Your permission” below); otherwise Spendly answers with its built-in on-device logic.</p>
     <h3>What is sent</h3>
     <ul>
-      <li>the message you type;</li>
-      <li>so the coach can follow the conversation, up to your last 8 messages and replies from the past two hours, each trimmed to a short length;</li>
-      <li>a numbers-only summary — your currency, safe-to-spend, month and week totals, monthly budget, budget left, savings goal, subscriptions total, biggest spending category, and Money Age.</li>
+      <li>the message you type, today’s date, and your app currency;</li>
+      <li>for chat, so Spendly AI can follow the conversation: up to your last 8 messages and replies from the past two hours, each shortened to at most 600 characters (3,000 in total);</li>
+      <li>a budget summary: safe to spend today, this month’s and this and last week’s totals, budget left, the share spent on food delivery, the total of your recurring subscriptions, your biggest spending category and its total, and — once there is enough data — your Money Age score, streak and its short reasons (which can mention your savings goal).</li>
     </ul>
-    <h3>What is never sent</h3>
+    <h3>What is never sent to our AI provider</h3>
     <ul>
-      <li>your email address, your name, your password, your account ID, your device identifiers, your location, your list of expenses, or any older messages — we never send your full chat history.</li>
+      <li>your email address, your name, your password, your account ID, your device identifiers, your location, your list of expenses, merchant names, notes, or older messages — your full chat history is never sent.</li>
     </ul>
     <h3>Your permission</h3>
     <p>We ask you first. The first time you use Spendly AI we show you what is sent and you choose Continue or Not now. Nothing is sent to our backend or our AI provider until you choose Continue. If you choose Not now, the rest of Spendly works normally.</p>
     <h3>Changing your mind</h3>
     <p>Turn AI data sharing off in Settings → Privacy &amp; Permissions at any time. Future AI requests stop immediately. The conversation already on your phone stays there until you clear it — there is a Clear AI chat history button on the same screen, and it does not touch your expenses. If we materially change what is sent, we will ask you again.</p>
     <h3>How you are identified</h3>
-    <p>You are not. We send a one-way scrambled code derived from your account ID so that our provider can enforce their abuse limits. It cannot be turned back into your identity, and your email address is never involved.</p>
+    <p>Our backend checks your sign-in token to confirm you are signed in and to apply your plan’s limits. It does not pass your account ID or email to OpenAI: OpenAI receives only a one-way scrambled code derived from your account ID, so it can enforce its abuse limits. That code cannot be turned back into your identity.</p>
     <h3>Why</h3>
-    <p>Solely to generate the coaching reply or the expense suggestion you asked for. We do not use it for advertising, we do not sell it, and we do not use it to build a profile of you.</p>
+    <p>Solely to generate the reply or the expense suggestion you asked for. We do not use it for advertising, we do not sell it, and we do not use it to build a profile of you.</p>
     <h3>Retention</h3>
-    <p>Spendly does not store your AI messages on our server. We keep only anonymous counters — how many requests were made, how long they took, and how many tokens were used — which contain no message content and are not tied to you. Your chat history stays on your device. We ask our AI provider not to retain these requests; they may still keep them for a limited period for their own abuse monitoring, and they handle data under their own API terms and privacy policy.</p>
+    <p>Spendly does not store your AI messages on our server, and we ask OpenAI not to store them (OpenAI may still keep requests for a limited period for abuse monitoring, under its own API terms and privacy policy). To enforce daily and monthly limits we keep usage counters — numbers of requests, tokens and estimated cost — against the same scrambled code, never with message content. They are deleted when you delete your account. Your chat history stays on your device.</p>
     <h3>Voice and receipts</h3>
-      <p><strong>Voice entry and receipt scanning run on your device.</strong> When you use Voice, Spendly uses your microphone and your phone’s on-device speech recognition to turn what you say into an expense draft — the audio is not recorded, not stored, and not sent to Spendly, our AI provider, or anyone else. When you take or choose a receipt photo, your phone’s on-device text recognition reads it to fill in an expense draft. The photo is never uploaded. Spendly works on its own temporary copy and deletes it when you finish — or, if the app was closed during a scan, the next time Spendly opens. A photo taken with the camera is not saved to your Photos, and a photo you choose from Photos is left exactly as it was. The recognised text is used only to fill in the draft and is not stored. Nothing is saved until you confirm the expense. Auto-Track reads bank messages that you paste, on your device; automatic SMS reading is not available.</p>
-      <p><strong>Receipt-scan counter:</strong> to count the Free plan’s receipt scans, Spendly stores the current month and the number of scans used in your iPhone’s Keychain. It contains nothing else, it stays on this iPhone (it is not synced or backed up to another device), and — unlike Spendly’s other data — it is not removed when you delete the app, so deleting and reinstalling does not reset the monthly allowance.</p>
+    <p><strong>Voice entry and receipt scanning run on your device.</strong> When you use Voice, Spendly uses your microphone and your phone’s on-device speech recognition to turn what you say into an expense draft — the audio is not recorded, not stored, and not sent to Spendly, our AI provider, or anyone else. When you take or choose a receipt photo, your phone’s on-device text recognition reads it — the text and where it sits on the receipt — to fill in the total, merchant and date. The photo is never uploaded. Spendly works on its own temporary copy and deletes it when you finish — or, if the app was closed during a scan, the next time Spendly opens. A photo taken with the camera is not saved to your Photos, and a photo you choose from Photos is left exactly as it was. The recognised text is used only to fill in the draft and is not stored. Nothing is saved until you confirm the expense. Auto-Track reads bank messages that you paste, on your device; automatic SMS reading is not available.</p>
+    <p><strong>Receipt-scan counter:</strong> to count the Free plan’s receipt scans, Spendly stores the current month and the number of scans used in your iPhone’s Keychain. It contains nothing else, it stays on this iPhone (it is not synced or backed up to another device), and — unlike Spendly’s other data — it is not removed when you delete the app, so deleting and reinstalling does not reset the monthly allowance.</p>
     <p>AI output is general educational guidance, not personalized financial, legal, or tax advice (see Section 9), and it can be inaccurate — always check it yourself.</p>
 
     <h2>7. How we use data</h2>
-    <p>We use your data to run the app’s core features (tracking, budgets, safe-to-spend, Money Age), provide optional backup and sync, operate accounts, generate AI coaching replies and expense suggestions when you use the AI Coach (see Section 6), and, when enabled, process subscriptions via the providers in Section 5. We do not use your financial data for advertising and do not sell it.</p>
+    <p>We use your data to run the app’s features (tracking, budgets, safe to spend, Money Age), provide optional backup and sync, operate accounts, generate Spendly AI replies and expense suggestions when you use them (Section 6), process subscriptions through the providers in Section 5, fix crashes (Section 3e), and understand app usage and AI costs (Section 3d). We do not use your financial data for advertising and do not sell it.</p>
 
     <h2>8. Sharing and third parties</h2>
     <p>We share data only with service providers strictly needed to run features you use:</p>
     <ul>
-      <li>[Supabase] — account/authentication and cloud sync (only if you sign in).</li>
-      <li>[Apple] / [Google] / [RevenueCat] — subscription processing (only if and when you subscribe).</li>
-      <li>[OpenAI] — AI coaching and expense parsing (only when you use the AI Coach, and only after you have agreed). Your message, a little of your recent conversation, and a numbers-only budget summary are processed by OpenAI in the United States under their API terms.</li>
-      <li>[Sentry] — crash and error reporting. Crash reports carry the error and your device/OS/app version. They are stripped of anything you typed, your email, and every financial value, and are not linked to your account.</li>
+      <li>[Supabase] — accounts, authentication and cloud sync (only if you sign in), and the database for our AI usage counters and usage analytics.</li>
+      <li>[Railway] — hosts Spendly’s backend, which passes AI requests to OpenAI without storing their content.</li>
+      <li>[OpenAI] — Spendly AI (only when you are signed in and have agreed). Your message, a little of your recent conversation, and the budget summary in Section 6 are processed by OpenAI in the United States under its API terms.</li>
+      <li>[Apple] / [Google] — Sign in with Apple and Google sign-in, if you use them; and App Store / Google Play purchases.</li>
+      <li>[RevenueCat] — subscription management (Section 5).</li>
+      <li>[Sentry] — crash and error reporting (Section 3e), processed in the European Union (Germany).</li>
     </ul>
     <p>Each provider processes data under its own privacy policy. We do not otherwise share, rent, or sell your data.</p>
 
@@ -128,9 +147,12 @@
 
     <h2>10. Data retention and deletion</h2>
     <ul>
-      <li>Local data: stays on your device until you delete it. Use Settings → Delete transaction data to clear expenses on the device, or uninstall the app to remove all local data.</li>
-      <li>Cloud data (if you have an account): you can delete your on-device transaction data (expenses) in the app at any time (via Delete transaction data); your budgets and settings remain on the device. You can delete your whole account and its cloud data from inside the app, at Settings → Account → Delete my account. You will be asked to confirm who you are first. This removes your account and the data synced to it, signs you out, and clears the local data on this device. You can also email <a href="mailto:hello@spendlyapp.me">hello@spendlyapp.me</a>; we process verified requests within 30 days. Where law requires limited retention, we keep only what it requires.</li>
-      <li>You can export your expenses to a CSV file from within the app at any time.</li>
+      <li><strong>On your device:</strong> your data stays until you delete it. Settings → Delete transaction data removes your expenses (and, if you are signed in, removes them from your synced account at the next sync); your budgets and settings remain. Settings → Reset this phone clears the expenses, settings and AI chat on this phone. Deleting the app removes all of Spendly’s data from the phone except the receipt-scan counter in the Keychain (Section 6).</li>
+      <li><strong>Your account:</strong> you can delete your account from inside the app at Settings → Account → Delete my account, after confirming who you are. This deletes your account and the data synced to it, deletes the AI usage counters and usage analytics kept against your scrambled code, signs you out, and clears the data on this device. You can also email <a href="mailto:hello@spendlyapp.me">hello@spendlyapp.me</a>; we process verified requests within 30 days.</li>
+      <li><strong>Subscriptions:</strong> deleting your account does not cancel a subscription. Cancel it in your Apple ID (or Google Play) subscription settings. Apple, Google and RevenueCat keep their own purchase records under their policies.</li>
+      <li><strong>Crash reports</strong> are kept by Sentry under its retention policy and are not linked to you.</li>
+      <li>Where law requires limited retention, we keep only what it requires.</li>
+      <li><strong>A copy of your data:</strong> Spendly Pro includes exporting your expenses to a CSV file. Anyone can request a copy of their account data at <a href="mailto:hello@spendlyapp.me">hello@spendlyapp.me</a>.</li>
     </ul>
 
     <h2>11. Data security</h2>
@@ -144,10 +166,10 @@
     <p>Spendly is intended for users aged 13 and over and is not intended for children under 13. We do not knowingly collect personal data from children. If you believe a child has provided us data, contact us and we will delete it.</p>
 
     <h2>13. Your rights</h2>
-    <p>Depending on your location, you may have rights to access, correct, export, or delete your personal data, and to withdraw consent. To exercise them, contact <a href="mailto:hello@spendlyapp.me">hello@spendlyapp.me</a>. We may need to verify your identity first.</p>
+    <p>Depending on your location, you may have rights to access, correct, export, or delete your personal data, and to withdraw consent. You can withdraw AI consent in the app at any time (Section 6) and delete your account in the app (Section 10). For anything else, contact <a href="mailto:hello@spendlyapp.me">hello@spendlyapp.me</a>. We may need to verify your identity first.</p>
 
     <h2>14. International users</h2>
-    <p>Your data may be processed in countries other than your own (e.g. where our providers host data). Where required, we rely on appropriate safeguards. Data-hosting region: ap-northeast-1 (Tokyo) for your account and synced data (Supabase). When you use the AI Coach, your message and a numbers-only budget summary are also processed by OpenAI in the United States.</p>
+    <p>Your data may be processed in countries other than your own. Where required, we rely on appropriate safeguards. Your account, synced data, AI usage counters and usage analytics are hosted by Supabase in ap-northeast-1 (Tokyo). When you use Spendly AI, your request is processed by OpenAI in the United States. Crash reports are processed by Sentry in the European Union (Germany). RevenueCat, Apple and Google process subscription and sign-in data under their own policies.</p>
 
     <h2>15. Changes to this policy</h2>
     <p>We may update this policy. Material changes will be posted here with a new effective date, and where required we’ll seek your consent before new data uses take effect.</p>

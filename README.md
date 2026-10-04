@@ -18,13 +18,13 @@ for the Spendly homepage and legal pages.
   it so visitors typing `www` don't hit an error. See §3.
 - Legal pages still show **"📝 Draft — subject to legal review."** — correct;
   it stays until a lawyer signs off.
-- ⚠️ **The files in this folder are AHEAD of what is live.** On 2026-09-18 the
-  legal pages were rewritten for real AI: the policy now describes the AI
-  provider (OpenAI, United States), the bounded conversation window, the
-  in-app consent, how to withdraw it, planned subscription processing, and in-app account
-  deletion. **The live site still serves the old text, which says cloud AI is
-  "not enabled yet" — that is now false.** Redeploy this folder to Cloudflare
-  Pages and re-verify all four URLs before the app goes to external beta.
+- ⚠️ **The files in this folder are AHEAD of what is live.** Branch
+  `release-copy-2026-10` (prepared 2026-10-04, not pushed or deployed) matches
+  app build 21: real AI with consent, on-device Voice and Receipt scanning, the
+  Keychain receipt-scan counter, live App Store subscriptions (RevenueCat), Sign
+  in with Apple and Google, signed-in usage analytics, Sentry crash reporting,
+  and in-app account deletion. It needs owner approval and legal review before
+  it is pushed and deployed.
 
 ```
 website/
@@ -172,9 +172,9 @@ The HTML legal pages are hand-mirrored from:
 When those change (or after legal review), update **all four** copies so they
 stay identical — `privacy.html` + `privacy/index.html`, and `terms.html` +
 `terms/index.html` — then redeploy. (Tip: edit the folder page, then copy it over
-the flat file.) **Do not** claim any not-yet-live feature is active. As of 2026-09-18 **real AI
-is live; production payments are not yet enabled** and the pages say so; **OCR, voice, receipt scanning,
-SMS and Auto-Track are still simulated** and must keep the "coming soon" /
-"planned" framing. `preview.html` embeds a full copy of both policies too —
-update it in the same pass or it becomes a public page contradicting the real
-one.
+the flat file.) **Do not** claim any not-yet-live feature is active. As of
+2026-10-04 (app build 21): real AI, on-device Voice and Receipt scanning,
+Auto-Track by **pasting** a bank message, and App Store subscriptions are live;
+automatic SMS reading and bank connections do **not** exist and must not be
+described as available. `preview.html` is a `noindex` pointer to the real pages
+and holds no policy copy, so it cannot drift.
