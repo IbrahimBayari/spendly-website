@@ -98,7 +98,7 @@
     <h2>5. Payments and subscriptions</h2>
     <ul>
       <li>Spendly offers an optional paid “Spendly Pro” subscription. Prices are shown by the App Store before you buy.</li>
-      <li>We do not process or store your payment details — no card number ever reaches us. Purchases are handled by the Apple App Store (or Google Play, where offered) and managed through our subscription provider [RevenueCat], under their own privacy policies.</li>
+      <li>We do not process or store your payment details — no card number ever reaches us. Purchases are handled by the Apple App Store and managed through our subscription provider [RevenueCat], under their own privacy policies.</li>
       <li>RevenueCat receives your purchase and subscription records from the store. Before you sign in, it uses a random identifier generated in the app; when you sign in, we link your purchases to your Spendly account ID (never your email or your name). Our backend also checks your plan with RevenueCat using your account ID, to apply the right AI limits.</li>
       <li>From RevenueCat we receive your subscription status — whether Pro is active, when it renews or expires, and whether you have had a free trial. We use this only to unlock what you paid for and to show your plan.</li>
     </ul>
@@ -139,7 +139,7 @@
       <li>[Supabase] — accounts, authentication and cloud sync (only if you sign in), and the database for our AI usage counters and usage analytics.</li>
       <li>[Railway] — hosts Spendly’s backend in the United States (US West), which passes AI requests to OpenAI without storing their content.</li>
       <li>[OpenAI] — Spendly AI (only when you are signed in and have agreed). Your message, a little of your recent conversation, and the budget summary in Section 6 are processed by OpenAI in the United States under its API terms.</li>
-      <li>[Apple] / [Google] — Sign in with Apple and Google sign-in, if you use them; and App Store / Google Play purchases.</li>
+      <li>[Apple] / [Google] — Sign in with Apple and Google sign-in, if you use them; and App Store purchases.</li>
       <li>[RevenueCat] — subscription management (Section 5).</li>
       <li>[Sentry] — crash and error reporting (Section 3e), processed in the European Union (Germany).</li>
     </ul>
@@ -152,7 +152,7 @@
     <ul>
       <li><strong>On your device:</strong> your data stays until you delete it. Settings → Delete transaction data removes your expenses (and, if you are signed in, removes them from your synced account at the next sync); your budgets and settings remain. Settings → Reset this phone clears the expenses, settings and AI chat on this phone. Deleting the app removes all of Spendly’s data from the phone except the receipt-scan counter in the Keychain (Section 6).</li>
       <li><strong>Your account:</strong> you can delete your account from inside the app at Settings → Account → Delete my account, after confirming who you are. This deletes your account and the data synced to it, deletes the AI usage counters and usage analytics kept against your scrambled code, signs you out, and clears the data on this device. You can also email <a href="mailto:hello@spendlyapp.me">hello@spendlyapp.me</a>; we process verified requests within 30 days.</li>
-      <li><strong>Subscriptions:</strong> deleting your account does not cancel a subscription. Cancel it in your Apple ID (or Google Play) subscription settings. Apple, Google and RevenueCat keep their own purchase records under their policies.</li>
+      <li><strong>Subscriptions:</strong> deleting your account does not cancel a subscription. Cancel it in your Apple ID subscription settings. Apple and RevenueCat keep their own purchase records under their policies.</li>
       <li><strong>Crash reports</strong> are kept by Sentry under its retention policy and are not linked to you.</li>
       <li>Where law requires limited retention, we keep only what it requires.</li>
       <li><strong>A copy of your data:</strong> Spendly Pro includes exporting your expenses to a CSV file. Anyone can request a copy of their account data at <a href="mailto:hello@spendlyapp.me">hello@spendlyapp.me</a>.</li>
