@@ -228,6 +228,8 @@ a { color: var(--primary); }
   max-width: var(--readw);
   text-align: center;
 }
+/* Long package names and repository URLs on /licenses must wrap on narrow phones. */
+.legal h3, .legal li { overflow-wrap: anywhere; }
 .legal pre.licence {
   white-space: pre-wrap;
   overflow-wrap: anywhere;
